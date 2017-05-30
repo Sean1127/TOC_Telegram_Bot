@@ -8,33 +8,138 @@ from fsm import TocMachine
 
 
 API_TOKEN = '396751364:AAEVQ_HrqYu1xH0H_zlZTdhgLkqKjQql6KY'
-WEBHOOK_URL = 'https://ab708a12.ngrok.io/hook'
+WEBHOOK_URL = 'https://c16ccd0d.ngrok.io/hook'
 
 app = Flask(__name__)
 bot = telegram.Bot(token=API_TOKEN)
 machine = TocMachine(
     states=[
         'user',
-        'state1',
-        'state2'
+        'animalia','chordata','mammalia','primates','hominidae',
+        'homo','sapiens',
+        'plantae','angiosperms','sapindales','mangifera','indica',
+        'bacteria','firmicutes','bacilli','lactobacillales',
+        'lactobacillaceae','lactobacillus','acidophilus'
     ],
     transitions=[
         {
             'trigger': 'advance',
             'source': 'user',
-            'dest': 'state1',
-            'conditions': 'is_going_to_state1'
+            'dest': 'animalia',
+            'conditions': 'to_animalia'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'animalia',
+            'dest': 'chordata',
+            'conditions': 'to_chordata'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'chordata',
+            'dest': 'mammalia',
+            'conditions': 'to_mammalia'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'mammalia',
+            'dest': 'primates',
+            'conditions': 'to_primates'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'primates',
+            'dest': 'hominidae',
+            'conditions': 'to_hominidae'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'hominidae',
+            'dest': 'homo',
+            'conditions': 'to_homo'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'homo',
+            'dest': 'sapiens',
+            'conditions': 'to_sapiens'
         },
         {
             'trigger': 'advance',
             'source': 'user',
-            'dest': 'state2',
-            'conditions': 'is_going_to_state2'
+            'dest': 'plantae',
+            'conditions': 'to_plantae'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'plantae',
+            'dest': 'angiosperms',
+            'conditions': 'to_angiosperms'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'angiosperms',
+            'dest': 'sapindales',
+            'conditions': 'to_sapindales'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'sapindales',
+            'dest': 'mangifera',
+            'conditions': 'to_mangifera'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'mangifera',
+            'dest': 'indica',
+            'conditions': 'to_indica'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'user',
+            'dest': 'bacteria',
+            'conditions': 'to_bacteria'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'bacteria',
+            'dest': 'firmicutes',
+            'conditions': 'to_firmicutes'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'firmicutes',
+            'dest': 'bacilli',
+            'conditions': 'to_bacilli'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'bacilli',
+            'dest': 'lactobacillales',
+            'conditions': 'to_lactobacillales'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'lactobacillales',
+            'dest': 'lactobacillaceae',
+            'conditions': 'to_lactobacillaceae'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'lactobacillaceae',
+            'dest': 'lactobacillus',
+            'conditions': 'to_lactobacillus'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'lactobacillus',
+            'dest': 'acidophilus',
+            'conditions': 'to_acidophilus'
         },
         {
             'trigger': 'go_back',
             'source': [
-                'state1',
+                's1',
                 'state2'
             ],
             'dest': 'user'
