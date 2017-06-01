@@ -8,7 +8,7 @@ from fsm import TocMachine
 
 
 API_TOKEN = '396751364:AAEVQ_HrqYu1xH0H_zlZTdhgLkqKjQql6KY'
-WEBHOOK_URL = 'https://c16ccd0d.ngrok.io/hook'
+WEBHOOK_URL = 'https://6b956442.ngrok.io/hook'
 
 app = Flask(__name__)
 bot = telegram.Bot(token=API_TOKEN)
@@ -17,11 +17,19 @@ machine = TocMachine(
         'user',
         'animalia','chordata','mammalia','primates','hominidae',
         'homo','sapiens',
-        'plantae','angiosperms','sapindales','mangifera','indica',
+        'plantae','angiosperms','sapindales','anacardiaceae',
+        'mangifera','indica',
         'bacteria','firmicutes','bacilli','lactobacillales',
-        'lactobacillaceae','lactobacillus','acidophilus'
+        'lactobacillaceae','lactobacillus','acidophilus',
+        'help'
     ],
     transitions=[
+        {
+            'trigger': 'advance',
+            'source': 'user',
+            'dest': 'help',
+            'conditions': 'to_help'
+        },
         {
             'trigger': 'advance',
             'source': 'user',
@@ -85,6 +93,12 @@ machine = TocMachine(
         {
             'trigger': 'advance',
             'source': 'sapindales',
+            'dest': 'anacardiaceae',
+            'conditions': 'to_anacardiaceae'
+        },
+        {
+            'trigger': 'advance',
+            'source': 'anacardiaceae',
             'dest': 'mangifera',
             'conditions': 'to_mangifera'
         },
@@ -139,8 +153,10 @@ machine = TocMachine(
         {
             'trigger': 'go_back',
             'source': [
-                's1',
-                'state2'
+                'help',
+                'acidophilus',
+                'sapiens',
+                'indica'
             ],
             'dest': 'user'
         }
